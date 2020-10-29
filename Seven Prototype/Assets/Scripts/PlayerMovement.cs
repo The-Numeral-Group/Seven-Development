@@ -12,12 +12,14 @@ public class PlayerMovement : MonoBehaviour
 
     CharacterController controller;
     Vector2 movementDirection;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = this.gameObject.GetComponent<CharacterController>();
         movementDirection = Vector2.zero;
+        animator = this.gameObject.GetComponent<Animator>();
         //having to keep a reference to the action being referenced defeats the purpose
         //of using Send Messages, but this seems to be the only way to do this right now
         //Debug.Log(Keyboard.keyboardLayout);
@@ -43,6 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer()
     {
+        if (movementDirection != Vector2.zero)
+        {
+            animator.SetBool("player_moving", true);
+            animator.SetFloat("player_H", movementDirection.x);
+            animator.SetFloat("player_V", movementDirection.y);
+        }
+        else
+        {
+            animator.SetBool("player_moving",false);
+        }
         controller.Move(movementDirection * speedScalar * Time.deltaTime);
     }
 
