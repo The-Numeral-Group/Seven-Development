@@ -53,10 +53,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\PlayerCollision.cs" />
     <Compile Include="Assets\Input Systems\Player Controls.cs" />
     <Compile Include="Assets\Scripts\CameraDirector.cs" />
-    <Compile Include="Assets\Scripts\SceneTransition.cs" />
-    <Compile Include="Assets\PlayerCollision.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
