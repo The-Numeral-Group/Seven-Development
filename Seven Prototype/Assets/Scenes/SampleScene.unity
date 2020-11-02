@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedScalar: 15
+  dodgeDistance: 15
+  Drag: {x: 10, y: 10}
 --- !u!95 &233838924
 Animator:
   serializedVersion: 3

@@ -9,10 +9,16 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float speedScalar = 5.0f;
+    //Variables used during dodge: Drag, and dodge Distance
+    public float dodgeDistance = 15.0f;
+    public Vector2 Drag = new Vector2(10, 10);
 
     CharacterController controller;
     Vector2 movementDirection;
     Animator animator;
+    //Variables for Dodging: isDodging,
+    bool isDodging;
+    Vector2 velocity;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
         controller = this.gameObject.GetComponent<CharacterController>();
         movementDirection = Vector2.zero;
         animator = this.gameObject.GetComponent<Animator>();
+
+        //Dodge control variables
+        isDodging = false;
+        velocity = new Vector2(0, 0);
         //having to keep a reference to the action being referenced defeats the purpose
         //of using Send Messages, but this seems to be the only way to do this right now
         //Debug.Log(Keyboard.keyboardLayout);
@@ -56,6 +66,15 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("player_moving",false);
         }
         controller.Move(movementDirection * speedScalar * Time.deltaTime);
+        //Dodge Controller
+        controller.Move(velocity * Time.deltaTime);
+        velocity.x /= 1 + Drag.x * Time.deltaTime;
+        velocity.y /= 1 + Drag.y * Time.deltaTime;
+        if (isDodging && Mathf.Abs(velocity.x) <= 1 && Mathf.Abs(velocity.y) <= 1)
+        {
+            Debug.Log("Dodge Over");
+            isDodging = false;
+        }
     }
 
     /*IEnumerator DoMovement(InputAction.CallbackContext input)
@@ -78,5 +97,16 @@ public class PlayerMovement : MonoBehaviour
 
     void OnAttack(){
         Debug.Log("attack has been registered");
+    }
+    void OnDodge()
+    {
+        if (!isDodging) {
+            isDodging = true;
+            //https://medium.com/ironequal/unity-character-controller-vs-rigidbody-a1e243591483
+            //credit to above link for equation used.
+            Debug.Log("Dodge Start");
+            velocity += Vector2.Scale(movementDirection, dodgeDistance * new Vector2((Mathf.Log(1f/ (Time.deltaTime * Drag.x + 1))/-Time.deltaTime),
+                                                                                                (Mathf.Log(1f/ (Time.deltaTime * Drag.y + 1))/-Time.deltaTime)));
+        }
     }
 }
