@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     }*/
 
     void OnAttack(){
-        Debug.Log("attack has been registered");
+        Debug.Log("attacking...");
+        this.gameObject.SendMessage("DoActorAttack");
     }
 }
