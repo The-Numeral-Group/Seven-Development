@@ -70,11 +70,6 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         velocity.x /= 1 + Drag.x * Time.deltaTime;
         velocity.y /= 1 + Drag.y * Time.deltaTime;
-        if (isDodging && Mathf.Abs(velocity.x) <= 1 && Mathf.Abs(velocity.y) <= 1)
-        {
-            Debug.Log("Dodge Over");
-            isDodging = false;
-        }
     }
 
     /*IEnumerator DoMovement(InputAction.CallbackContext input)
@@ -108,6 +103,14 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Dodge Start");
             velocity += Vector2.Scale(movementDirection, dodgeDistance * new Vector2((Mathf.Log(1f/ (Time.deltaTime * Drag.x + 1))/-Time.deltaTime),
                                                                                                 (Mathf.Log(1f/ (Time.deltaTime * Drag.y + 1))/-Time.deltaTime)));
+            StartCoroutine(Dodge());
         }
+    }
+
+    IEnumerator Dodge() 
+    {
+        yield return new WaitForSeconds(1);
+        isDodging = false;
+        Debug.Log("Dodge over");
     }
 }
