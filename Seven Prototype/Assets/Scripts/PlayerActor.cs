@@ -13,6 +13,10 @@ public class PlayerActor : MonoBehaviour
 
     //Private Fields (fuck you, and your accesability)
     private GameObject weaponObject;
+    private Vector2 facingDirection = new Vector2(-1.0f, 0);
+
+    //temp variable, details on weapon's anchor point should be in weapon
+    private Vector2 weaponPositionScale = new Vector2(0.1f, 0.1f);
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +24,7 @@ public class PlayerActor : MonoBehaviour
         //create the weapon object but deactivate it for now
         weaponObject = Instantiate(startingWeaponObject, this.gameObject.transform);
         //the weapon isn't following the game object, I've heard this helps?
-        weaponObject.transform.localPosition = new Vector2(0.1f, 0.0f);
+        weaponObject.transform.localPosition = weaponPositionScale;
         //weapon = weaponObject.GetComponent<Weapon>();
         weaponObject.SetActive(false);
     }
@@ -34,11 +38,16 @@ public class PlayerActor : MonoBehaviour
     //make the actor attack
     public void DoActorAttack(){
         weaponObject.SetActive(true);
+        weaponObject.transform.localPosition = facingDirection * weaponPositionScale;
         weaponObject.SendMessage("DoWeaponStrike");
     }
 
     //make the actor die
     public void DoActorDeath(){
         this.gameObject.SetActive(false);
+    }
+
+    public void DoActorUpdateFacing(Vector2 newDirection){
+        facingDirection = newDirection;
     }
 }

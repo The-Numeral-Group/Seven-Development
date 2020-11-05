@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(input.isPressed);
         //StartCoroutine(DoMovement(input));
         movementDirection = input.Get<Vector2>();
+        this.gameObject.SendMessage("DoActorUpdateFacing", movementDirection);
     }
 
     void MovePlayer()
