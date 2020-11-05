@@ -48,6 +48,6 @@ public class PlayerActor : MonoBehaviour
     }
 
     public void DoActorUpdateFacing(Vector2 newDirection){
-        facingDirection = newDirection;
+        if(newDirection != Vector2.zero){facingDirection = newDirection;}
     }
 }

@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\ActorHealth.cs" />
      <Compile Include="Assets\Scripts\TrainingDummy.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
+     <Compile Include="Assets\Scripts\ActorWeakPoint.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/home/main/Unity/2020.1.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

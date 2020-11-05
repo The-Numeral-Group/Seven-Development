@@ -6,6 +6,10 @@ public class ActorHealth : MonoBehaviour
 {
     //Public Fields (Inspector Accessable)
     public int startingMaxHealth = 100;
+    //this value determines how resistant to damage this thing is
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    public float damageResistance = 0.0f;
 
     //Public Properties (Publicly Accessable)
     public int maxHealth { get; set; }
@@ -28,9 +32,12 @@ public class ActorHealth : MonoBehaviour
         
     }*/
 
-    public void takeDamage(int damageTaken){
+    public virtual void takeDamage(int damageTaken){
+        var damage = (int)Mathf.Floor(damageTaken * (1.0f - damageResistance));
+        Debug.Log("taking " + damage + " damage");
+
         //take the damage
-        this.currentHealth -= damageTaken;
+        this.currentHealth -= damage;
 
         //if the attack killed the thing
         if(this.currentHealth <= 0){
