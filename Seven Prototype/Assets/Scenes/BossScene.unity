@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1237971029556213627, guid: b28c4777a073e50409e27553f727356b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119698, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -152,15 +156,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.4
+      value: 18.1
       objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 36.4
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -216,8 +220,8 @@ GameObject:
   - component: {fileID: 498005845}
   - component: {fileID: 498005846}
   m_Layer: 0
-  m_Name: Boss
-  m_TagString: Untagged
+  m_Name: Gluttony
+  m_TagString: Gluttony
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,21 +236,21 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.005289614, y: -0.010579586}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 2.1572409, y: 2.5275278}
   m_EdgeRadius: 0
 --- !u!212 &498005842
 SpriteRenderer:
@@ -288,8 +292,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b607d36c976e794cb2ab9e1f917c0c1, type: 3}
-  m_Color: {r: 0.8773585, g: 0.47592562, b: 0.47592562, a: 1}
+  m_Sprite: {fileID: 21300000, guid: ee343724e00e0394ea1edf10f7e32228, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -307,8 +311,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498005840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.79, y: 5.18, z: -1}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalPosition: {x: -6.79, y: 5.18, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -326,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMaxHealth: 10
+  damageResistance: 0
 --- !u!114 &498005845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inverse_speed: 1
+  walk_speed: 10
+  movementDirection: {x: 0, y: 0, z: 0}
+  currentPos: {x: 0, y: 0, z: 0}
 --- !u!50 &498005846
 Rigidbody2D:
   serializedVersion: 4
@@ -574,7 +582,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: caa1fb039d500784c94cef9c45fc7a8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58812d580b8318e4bab6aa098467c221, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

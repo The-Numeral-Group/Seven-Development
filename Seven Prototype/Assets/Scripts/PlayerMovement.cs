@@ -12,13 +12,13 @@ public class PlayerMovement : MonoBehaviour
     //Variables used during dodge: Drag, and dodge Distance
     public float dodgeDistance = 15.0f;
     public Vector2 Drag = new Vector2(10, 10);
+    public Vector2 velocity;
+    public Vector2 movementDirection;
 
     CharacterController controller;
-    Vector2 movementDirection;
     Animator animator;
     //Variables for Dodging: isDodging,
     bool isDodging;
-    Vector2 velocity;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(input.isPressed);
         //StartCoroutine(DoMovement(input));
         movementDirection = input.Get<Vector2>();
+        //Debug.Log(movementDirection);
         this.gameObject.SendMessage("DoActorUpdateFacing", movementDirection);
     }
 
