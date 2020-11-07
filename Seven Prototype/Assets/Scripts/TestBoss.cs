@@ -9,19 +9,23 @@ public class TestBoss : MonoBehaviour
     public float crush_range = 60f;
     public Vector3 movementDirection;
     public Vector3 currentPos;
+    public GameObject projectile;
     GameObject player;
     Rigidbody2D rb;
     BoxCollider2D bc;
     float heightOffset = 20;
     float lastX;
     float lastY;
-    bool canAttack = false;
+    bool projectileOnCooldown = false;
+    ActorHealth health;
 
     private State state;
     private enum State
     {
         Walk,
         Physical_Crush,
+        Fire_Projectile,
+        Null,
     }
 
     // Start is called before the first frame update
@@ -30,7 +34,8 @@ public class TestBoss : MonoBehaviour
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
-        bc.enabled = true;
+        health = GetComponent<ActorHealth>();
+        //bc.enabled = true;
         lastX = transform.position.x;
         lastY = transform.position.y;
 
@@ -40,20 +45,40 @@ public class TestBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetMovementDirection();
-        CheckDistance();
+        
     }
 
     void FixedUpdate() 
     {
         switch (state)
         {
+            //Moved the functions in update to walk to avoid the stuttering that occurs on ground pound.
             case State.Walk:
+                checkHealth();
+                GetMovementDirection();
+                CheckDistance();
                 StartCoroutine(WalkToTarget());
                 break;
             case State.Physical_Crush:
                 StartCoroutine(MoveToTarget());
                 break;
+            case State.Fire_Projectile:
+                StartCoroutine(GenerateProjectiles());
+                break;
+            case State.Null:
+                break;
+        }
+    }
+
+    //Checking on gluttonys health
+    void checkHealth()
+    {
+        if (health.currentHealth <= 5)
+        {
+            if (!projectileOnCooldown)
+            {
+                state = State.Fire_Projectile;
+            }
         }
     }
 
@@ -115,6 +140,7 @@ public class TestBoss : MonoBehaviour
     //answer by: philjhale
     IEnumerator MoveToTarget()
     {
+        state = State.Null;
         Vector2 playerPos = GetPathToPlayerPos();
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         float rate = 1.0f/inverse_speed;
@@ -122,7 +148,6 @@ public class TestBoss : MonoBehaviour
             transform.position = Vector2.Lerp(currentPos, playerPos, i);
             yield return null;
         }
-        canAttack = true;
         Debug.Log("Move Finished");
         StartCoroutine(SlamDown());
     }
@@ -137,10 +162,9 @@ public class TestBoss : MonoBehaviour
             transform.position = Vector2.Lerp(currentPos, desiredPos, i);
             yield return null;
         }
-        bc.enabled = true;
+        //bc.enabled = true;
         yield return new WaitForSeconds(1);
-        bc.enabled = false;
-        canAttack = false;
+        //bc.enabled = false;
         Debug.Log("Slam Finished");
         state = State.Walk;
         StartCoroutine(MoveBackUp());
@@ -158,6 +182,32 @@ public class TestBoss : MonoBehaviour
         }
         state = State.Walk;
         Debug.Log("Reset Finished");
+    }
+
+    IEnumerator GenerateProjectiles()
+    {
+        projectileOnCooldown = true;
+        state = State.Null;
+        //Move to center
+        Vector2 arenaCenter = new Vector2(0, 0);
+        Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        float rate = 1.0f/inverse_speed;
+        for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime * rate) {
+            transform.position = Vector2.Lerp(currentPos, arenaCenter, i);
+            yield return null;
+        }
+        //Spray Projectiles
+        float dtheta = 45 * Mathf.PI / 180;
+        for (int i = 0; i < 8; i++)
+        {
+            GameObject proj = Instantiate(projectile, this.gameObject.transform.position, Quaternion.identity) as GameObject;
+            Vector2 direction = new Vector2(Mathf.Cos(i * dtheta), Mathf.Sin(i * dtheta));
+            proj.GetComponent<GluttonyProjectile>().initializeProjectile(direction);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1);
+        state = State.Walk;
+        //yield return null;
     }
 
     void DoActorDeath() {

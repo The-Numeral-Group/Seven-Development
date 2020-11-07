@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1237971029556213604, guid: b28c4777a073e50409e27553f727356b, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1237971029556213627, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1
@@ -250,7 +254,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.1572409, y: 2.5275278}
+  m_Size: {x: 1.8286259, y: 2.238492}
   m_EdgeRadius: 0
 --- !u!212 &498005842
 SpriteRenderer:
@@ -345,8 +349,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inverse_speed: 1
   walk_speed: 10
+  crush_range: 60
+  projectile_range: 30
   movementDirection: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
+  projectile: {fileID: 8461248972865311950, guid: 6c407ee32d542af4baa748a969ca4a5a, type: 3}
 --- !u!50 &498005846
 Rigidbody2D:
   serializedVersion: 4
@@ -499,7 +506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1992630184
 MonoBehaviour:
   m_ObjectHideFlags: 0
