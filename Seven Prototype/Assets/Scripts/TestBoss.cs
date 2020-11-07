@@ -7,9 +7,11 @@ public class TestBoss : MonoBehaviour
     public float inverse_speed = 2;
     public float walk_speed;
     public float crush_range = 60f;
+    public float bite_range = 25f;
     public Vector3 movementDirection;
     public Vector3 currentPos;
     public GameObject projectile;
+    public GameObject bite;
     GameObject player;
     Rigidbody2D rb;
     BoxCollider2D bc;
@@ -17,13 +19,17 @@ public class TestBoss : MonoBehaviour
     float lastX;
     float lastY;
     bool projectileOnCooldown = false;
+    bool biteOnCooldown = false;
     ActorHealth health;
 
-    private State state;
-    private enum State
+    public State state;
+    public enum State
     {
         Walk,
         Physical_Crush,
+        Crushed,
+        Physical_Bite,
+        Bited,
         Fire_Projectile,
         Null,
     }
@@ -62,6 +68,13 @@ public class TestBoss : MonoBehaviour
             case State.Physical_Crush:
                 StartCoroutine(MoveToTarget());
                 break;
+            case State.Crushed:
+                break;
+            case State.Physical_Bite:
+                StartCoroutine(PhysicalBite());
+                break;
+            case State.Bited:
+                break;
             case State.Fire_Projectile:
                 StartCoroutine(GenerateProjectiles());
                 break;
@@ -69,6 +82,7 @@ public class TestBoss : MonoBehaviour
                 break;
         }
     }
+
 
     //Checking on gluttonys health
     void checkHealth()
@@ -119,6 +133,10 @@ public class TestBoss : MonoBehaviour
         {
             state = State.Physical_Crush;
         }
+        if ((Vector2.Distance(player.transform.position, this.gameObject.transform.position) <= bite_range) && (!biteOnCooldown)) 
+        {
+            state = State.Physical_Bite;
+        }
     }
 
     Vector3 GetPathToPlayerPos()
@@ -140,7 +158,7 @@ public class TestBoss : MonoBehaviour
     //answer by: philjhale
     IEnumerator MoveToTarget()
     {
-        state = State.Null;
+        state = State.Crushed;
         Vector2 playerPos = GetPathToPlayerPos();
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         float rate = 1.0f/inverse_speed;
@@ -167,9 +185,14 @@ public class TestBoss : MonoBehaviour
         //bc.enabled = false;
         Debug.Log("Slam Finished");
         state = State.Walk;
-        StartCoroutine(MoveBackUp());
+        //StartCoroutine(MoveBackUp());
     }
 
+    // Mingun: This function is not going to be called.
+    // Explaination: When glutton finishes the slam/crush,
+    // It should go straight back to "Walk" state and follow the player.
+    // However, this function makes the gluttony move vertically up for few seconds, then go back to the "Walk" state. 
+    // I will leave this function for now for any future references. 
     IEnumerator MoveBackUp()
     {
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
@@ -182,6 +205,23 @@ public class TestBoss : MonoBehaviour
         }
         state = State.Walk;
         Debug.Log("Reset Finished");
+    }
+
+    IEnumerator PhysicalBite()
+    {
+        state = State.Bited;
+        biteOnCooldown = true;
+        Debug.Log("Bite");
+        Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
+
+        yield return new WaitForSeconds(1);
+        Instantiate(bite, playerPos, Quaternion.identity);
+        yield return null;
+
+        yield return new WaitForSeconds(1);
+        state = State.Walk;
+        yield return new WaitForSeconds(3);
+        biteOnCooldown = false;
     }
 
     IEnumerator GenerateProjectiles()

@@ -16,6 +16,7 @@ public class PlayerCollision : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other);
         if (other.CompareTag("SceneChange"))
         {
             Debug.Log("Scene Changed to BossScene");
@@ -23,11 +24,34 @@ public class PlayerCollision : MonoBehaviour
         }
         if (other.CompareTag("Gluttony"))
         {
-            Debug.Log("Collided");
+            //Debug.Log("Collided");
             PlayerMovement playerMov = player.GetComponent<PlayerMovement>();
+            ActorHealth playerHealth = player.GetComponent<ActorHealth>();
             TestBoss gluttonyMov = gluttony.GetComponent<TestBoss>();
             playerMov.velocity += Vector2.Scale(gluttonyMov.movementDirection, 10.0f * 
                 new Vector2((Mathf.Log(1f / (Time.deltaTime * playerMov.Drag.x + 1)) / -Time.deltaTime),(Mathf.Log(1f / (Time.deltaTime * playerMov.Drag.y + 1)) / -Time.deltaTime)));
+
+            if(gluttonyMov.state == TestBoss.State.Walk)
+            {
+                // reduces player health by 1 when gluttony is walking
+                playerHealth.takeDamage(1);
+            }
+            else if (gluttonyMov.state == TestBoss.State.Crushed)
+            {
+                // reduces player health by 5 when gluttony is slamming/crushing
+                playerHealth.takeDamage(3);
+            }
         }
+        if (other.CompareTag("Gluttony Projectile"))
+        {
+            ActorHealth playerHealth = player.GetComponent<ActorHealth>();
+            playerHealth.takeDamage(3);
+        }
+        if (other.CompareTag("Gluttony Bite"))
+        {
+            ActorHealth playerHealth = player.GetComponent<ActorHealth>();
+            playerHealth.takeDamage(1);
+        }
+        
     }
 }

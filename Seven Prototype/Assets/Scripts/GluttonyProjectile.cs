@@ -6,7 +6,7 @@ public class GluttonyProjectile : MonoBehaviour
 {
     Rigidbody2D rb;
     bool canMove = false;
-    Vector2 movementDirection;
+    Vector3 movementDirection;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,7 @@ public class GluttonyProjectile : MonoBehaviour
         }
     }
 
-    public void initializeProjectile(Vector2 direction)
+    public void initializeProjectile(Vector3 direction)
     {
         movementDirection = direction;
         canMove = true;

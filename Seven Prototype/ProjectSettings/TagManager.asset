@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SceneChange
   - Gluttony
+  - Gluttony Projectile
+  - Gluttony Bite
   layers:
   - Default
   - TransparentFX
