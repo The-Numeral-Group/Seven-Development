@@ -240,7 +240,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.005289614, y: -0.010579586}
@@ -350,7 +350,6 @@ MonoBehaviour:
   inverse_speed: 1
   walk_speed: 10
   crush_range: 60
-  projectile_range: 30
   movementDirection: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
   projectile: {fileID: 8461248972865311950, guid: 6c407ee32d542af4baa748a969ca4a5a, type: 3}
