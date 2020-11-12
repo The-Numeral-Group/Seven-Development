@@ -8,7 +8,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController),typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float speedScalar = 5.0f;
+    public float startingSpeed = 5.0f;
+    public float speed { get; set; }
     //Variables used during dodge: Drag, and dodge Distance
     public float dodgeDistance = 15.0f;
     public Vector2 Drag = new Vector2(10, 10);
@@ -23,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.speed = startingSpeed;
+
         controller = this.gameObject.GetComponent<CharacterController>();
         movementDirection = Vector2.zero;
         animator = this.gameObject.GetComponent<Animator>();
@@ -67,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("player_moving",false);
         }
-        controller.Move(movementDirection * speedScalar * Time.deltaTime);
+        controller.Move(movementDirection * speed * Time.deltaTime);
         //Dodge Controller
         controller.Move(velocity * Time.deltaTime);
         velocity.x /= 1 + Drag.x * Time.deltaTime;

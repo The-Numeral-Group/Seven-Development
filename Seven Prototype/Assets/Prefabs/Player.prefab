@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1237971029938119705}
   - component: {fileID: 1237971029938119707}
   - component: {fileID: 1237971029938119704}
+  - component: {fileID: 9131114824053252100}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -212,9 +213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923cba70215326b6abb7f4745d3e0503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalar: 15
+  startingSpeed: 5
   dodgeDistance: 15
   Drag: {x: 10, y: 10}
+  velocity: {x: 0, y: 0}
+  movementDirection: {x: 0, y: 0}
 --- !u!114 &1237971029938119711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMaxHealth: 100
+  damageResistance: 0
 --- !u!114 &1237971029938119704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,3 +326,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingWeaponObject: {fileID: 5158843088997703464, guid: fe2d91bd21e60740e91ebb81c40562ed, type: 3}
+--- !u!114 &9131114824053252100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237971029938119699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 850dbd4b48fbaa7a2b2d9e4eb81cbcac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

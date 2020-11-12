@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ActorHealth))]
+[RequireComponent(typeof(ActorHealth), typeof(PlayerMovement), typeof(PlayerEffectHandler))]
 public class PlayerActor : MonoBehaviour
 {
 
@@ -14,6 +14,10 @@ public class PlayerActor : MonoBehaviour
     //Private Fields (fuck you, and your accesability)
     private GameObject weaponObject;
     private Vector2 facingDirection = new Vector2(-1.0f, 0);
+    //these should really be somewhere else, but that somewhere else
+    //hasn't been invented yet.
+    private ActorHealth health;
+    private PlayerMovement movement;
 
     //temp variable, details on weapon's anchor point should be in weapon
     private Vector2 weaponPositionScale = new Vector2(0.1f, 0.1f);
@@ -27,6 +31,9 @@ public class PlayerActor : MonoBehaviour
         weaponObject.transform.localPosition = weaponPositionScale;
         //weapon = weaponObject.GetComponent<Weapon>();
         weaponObject.SetActive(false);
+
+        health = this.gameObject.GetComponent<ActorHealth>();
+        movement = this.gameObject.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -50,4 +57,9 @@ public class PlayerActor : MonoBehaviour
     public void DoActorUpdateFacing(Vector2 newDirection){
         if(newDirection != Vector2.zero){facingDirection = newDirection;}
     }
+
+    //simple getters for health and movement. This accessing should be handled
+    //in a different object, but it hasn't been invented yet.
+    public ActorHealth getHealthObject(){ return health; }
+    public PlayerMovement getMovementObject(){ return movement; }
 }
