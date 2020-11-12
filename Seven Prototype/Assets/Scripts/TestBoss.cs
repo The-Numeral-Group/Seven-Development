@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestBoss : MonoBehaviour
 {
-    public float inverse_speed = 2;
+    public float inverse_speed = 1;
     public float walk_speed;
     public float crush_range = 60f;
     public float bite_range = 25f;
@@ -12,10 +12,12 @@ public class TestBoss : MonoBehaviour
     public Vector3 currentPos;
     public GameObject projectile;
     public GameObject bite;
+    public GameObject crush_shadow;
     GameObject player;
     Rigidbody2D rb;
-    BoxCollider2D bc;
-    float heightOffset = 20;
+    PolygonCollider2D pc;
+    float riseHeightOffset = 120;
+    float fallHeightOffset = 120;
     float lastX;
     float lastY;
     bool projectileOnCooldown = false;
@@ -39,9 +41,9 @@ public class TestBoss : MonoBehaviour
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody2D>();
-        bc = GetComponent<BoxCollider2D>();
+        pc = GetComponent<PolygonCollider2D>();
         health = GetComponent<ActorHealth>();
-        //bc.enabled = true;
+        pc.enabled = true;
         lastX = transform.position.x;
         lastY = transform.position.y;
 
@@ -51,10 +53,10 @@ public class TestBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         switch (state)
         {
@@ -133,7 +135,7 @@ public class TestBoss : MonoBehaviour
         {
             state = State.Physical_Crush;
         }
-        if ((Vector2.Distance(player.transform.position, this.gameObject.transform.position) <= bite_range) && (!biteOnCooldown)) 
+        if ((Vector2.Distance(player.transform.position, this.gameObject.transform.position) <= bite_range) && (!biteOnCooldown))
         {
             state = State.Physical_Bite;
         }
@@ -142,7 +144,7 @@ public class TestBoss : MonoBehaviour
     Vector3 GetPathToPlayerPos()
     {
         Vector2 playerPos = new Vector3(player.transform.position.x, player.transform.position.y);
-        playerPos.y += heightOffset;
+        playerPos.y += riseHeightOffset;
         return playerPos;
     }
 
@@ -159,33 +161,45 @@ public class TestBoss : MonoBehaviour
     IEnumerator MoveToTarget()
     {
         state = State.Crushed;
+        pc.enabled = false;
         Vector2 playerPos = GetPathToPlayerPos();
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        float rate = 1.0f/inverse_speed;
-        for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime * rate) {
+        float rate = 1.0f / inverse_speed;
+        for (float i = 0.0f; i <= 1.0f; i += Time.deltaTime * rate)
+        {
             transform.position = Vector2.Lerp(currentPos, playerPos, i);
             yield return null;
         }
         Debug.Log("Move Finished");
+        StartCoroutine(CrushShadow());
+    }
+
+    // Create a black shadow that will follow the player for few seconds. 
+    // After few seconds, gluttony will try to crush at the shadow's position.
+    IEnumerator CrushShadow()
+    {
+        Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
+        playerPos.y += 5.0f;
+        Instantiate(crush_shadow, playerPos, Quaternion.identity);
+        yield return new WaitForSeconds(3);
         StartCoroutine(SlamDown());
     }
 
     IEnumerator SlamDown()
     {
+        pc.enabled = true;
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         Vector2 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        desiredPos.y -= heightOffset;
-        float rate = 1.0f/(inverse_speed / 10);
-        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime * rate) {
+        desiredPos.y -= fallHeightOffset;
+        float rate = 1.0f / (inverse_speed / 10);
+        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime * rate)
+        {
             transform.position = Vector2.Lerp(currentPos, desiredPos, i);
             yield return null;
         }
-        //bc.enabled = true;
         yield return new WaitForSeconds(1);
-        //bc.enabled = false;
         Debug.Log("Slam Finished");
         state = State.Walk;
-        //StartCoroutine(MoveBackUp());
     }
 
     // Mingun: This function is not going to be called.
@@ -193,7 +207,7 @@ public class TestBoss : MonoBehaviour
     // It should go straight back to "Walk" state and follow the player.
     // However, this function makes the gluttony move vertically up for few seconds, then go back to the "Walk" state. 
     // I will leave this function for now for any future references. 
-    IEnumerator MoveBackUp()
+    /*IEnumerator MoveBackUp()
     {
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         Vector3 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
@@ -205,7 +219,7 @@ public class TestBoss : MonoBehaviour
         }
         state = State.Walk;
         Debug.Log("Reset Finished");
-    }
+    }*/
 
     IEnumerator PhysicalBite()
     {
@@ -231,8 +245,9 @@ public class TestBoss : MonoBehaviour
         //Move to center
         Vector2 arenaCenter = new Vector2(0, 0);
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        float rate = 1.0f/inverse_speed;
-        for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime * rate) {
+        float rate = 1.0f / inverse_speed;
+        for (float i = 0.0f; i <= 1.0f; i += Time.deltaTime * rate)
+        {
             transform.position = Vector2.Lerp(currentPos, arenaCenter, i);
             yield return null;
         }
@@ -250,7 +265,8 @@ public class TestBoss : MonoBehaviour
         //yield return null;
     }
 
-    void DoActorDeath() {
+    void DoActorDeath()
+    {
         this.gameObject.SetActive(false);
     }
 }
