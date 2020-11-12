@@ -13,6 +13,7 @@ public class TestBoss : MonoBehaviour
     public GameObject projectile;
     public GameObject bite;
     public GameObject crush_shadow;
+    public GameObject sin_item;
     GameObject player;
     Rigidbody2D rb;
     PolygonCollider2D pc;
@@ -197,6 +198,7 @@ public class TestBoss : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         Debug.Log("Slam Finished");
+        Instantiate(sin_item, this.gameObject.transform.position, Quaternion.identity);
         state = State.Walk;
     }
 
