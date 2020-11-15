@@ -44,4 +44,5 @@ public class BossCamera : MonoBehaviour
         }
         return bounds.center;
     }
+
 }
