@@ -19,7 +19,7 @@ public class BossCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate() //Changed from lateupdate to remove stuttering
     {
         Vector2 centerPoint = GetCenterPoint();
         Vector2 newPosition = centerPoint + offset;
