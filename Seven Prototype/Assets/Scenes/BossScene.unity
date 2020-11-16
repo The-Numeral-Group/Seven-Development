@@ -360,6 +360,10 @@ PrefabInstance:
       propertyPath: crush_shadow
       value: 
       objectReference: {fileID: 6186627015767811670, guid: f5a9e7560a6aa8949b85c5cd0215a835, type: 3}
+    - target: {fileID: 3791280637614207761, guid: 436a84d11e4898c46a33473811377c16, type: 3}
+      propertyPath: sin_item
+      value: 
+      objectReference: {fileID: 3604279451415291509, guid: 3851c8d59075e63729a2e35a822efba5, type: 3}
     - target: {fileID: 3791280637614207764, guid: 436a84d11e4898c46a33473811377c16, type: 3}
       propertyPath: m_Name
       value: Gluttony
