@@ -13,7 +13,10 @@ public class TestBoss : MonoBehaviour
     public GameObject projectile;
     public GameObject bite;
     public GameObject crush_shadow;
+<<<<<<< HEAD
+=======
     public GameObject sin_item;
+>>>>>>> b04f70c4b8d6b85426a742fdd8653bda1874704c
     GameObject player;
     GameObject camera;
     Rigidbody2D rb;
@@ -191,11 +194,22 @@ public class TestBoss : MonoBehaviour
     IEnumerator SlamDown()
     {
         pc.enabled = true;
+<<<<<<< HEAD
+        BossCameraShake bossCamera = camera.GetComponent<BossCameraShake>();
+        bossCamera.cameraShake(2.0f, 0.2f);
+        Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        Vector2 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        desiredPos.y -= fallHeightOffset;
+        float rate = 1.0f / (inverse_speed / 10);
+        for (float i = 0.0f; i < 1.0f; i += Time.deltaTime * rate)
+        {
+=======
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         Vector2 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         desiredPos.y -= fallHeightOffset;
         float rate = 1.0f/(inverse_speed / 10);
         for (float i = 0.0f; i < 1.0f; i += Time.deltaTime * rate) {
+>>>>>>> b04f70c4b8d6b85426a742fdd8653bda1874704c
             transform.position = Vector2.Lerp(currentPos, desiredPos, i);
             yield return null;
         }
