@@ -215,6 +215,8 @@ MonoBehaviour:
   speedScalar: 15
   dodgeDistance: 15
   Drag: {x: 10, y: 10}
+  velocity: {x: 0, y: 0}
+  movementDirection: {x: 0, y: 0}
 --- !u!114 &1237971029938119711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMaxHealth: 100
+  damageResistance: 0
 --- !u!114 &1237971029938119704
 MonoBehaviour:
   m_ObjectHideFlags: 0
