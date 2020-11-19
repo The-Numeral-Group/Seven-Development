@@ -42,7 +42,7 @@ public class TestBoss : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        camera = GameObject.Find("BossCam");
+        camera = GameObject.Find("ShakeCam");
         rb = GetComponent<Rigidbody2D>();
         pc = GetComponent<PolygonCollider2D>();
         health = GetComponent<ActorHealth>();
@@ -191,6 +191,8 @@ public class TestBoss : MonoBehaviour
     IEnumerator SlamDown()
     {
         pc.enabled = true;
+        BossCameraShake bossCamera = camera.GetComponent<BossCameraShake>();
+        bossCamera.cameraShake(2.0f, 0.2f);
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         Vector2 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         desiredPos.y -= fallHeightOffset;

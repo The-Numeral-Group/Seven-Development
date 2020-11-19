@@ -37,7 +37,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7166616518786396238}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -61,7 +61,7 @@ MonoBehaviour:
   targets:
   - {fileID: 0}
   max_distance: 50
-  offset: {x: 0, y: 0}
+  offset: {x: 0, y: 10}
   smoothTime: 0.5
 --- !u!1001 &3145672961165559907
 PrefabInstance:
@@ -128,7 +128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371869272269656745, guid: f32dd5addaa3891469c21ec5d9aa1f36, type: 3}
       propertyPath: m_Name
-      value: BossCam
+      value: ShakeCam
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5247611816275796116, guid: f32dd5addaa3891469c21ec5d9aa1f36, type: 3}
