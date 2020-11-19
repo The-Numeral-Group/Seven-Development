@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923cba70215326b6abb7f4745d3e0503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingSpeed: 5
+  startingSpeed: 10
   dodgeDistance: 15
   Drag: {x: 10, y: 10}
   velocity: {x: 0, y: 0}

@@ -6,6 +6,7 @@ public class HubCamera : MonoBehaviour
 {
     public Transform playerTransform;
     public List<Transform> POI;
+    public Vector2 offset;
     public float minDistanceToPOI = 20f;
     public float maxZoom = 40;
     public float minZoom  = 17f;
@@ -31,6 +32,9 @@ public class HubCamera : MonoBehaviour
     void MoveCamera()
     {
         Vector3 cameraPosition = GetCenterPos();
+        if (!m_closeToPOI) {
+            cameraPosition = cameraPosition + new Vector3(offset.x, offset.y, cameraPosition.z);
+        }
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(cameraPosition.x, cameraPosition.y, transform.position.z), ref velocity, smoothTime);
     }
 

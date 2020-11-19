@@ -147,6 +147,8 @@ MonoBehaviour:
   currentPos: {x: 0, y: 0, z: 0}
   projectile: {fileID: 8461248972865311950, guid: 6c407ee32d542af4baa748a969ca4a5a, type: 3}
   bite: {fileID: 2181826602117766788, guid: 190058ff07415e1448da755ca3edf3a9, type: 3}
+  crush_shadow: {fileID: 6186627015767811670, guid: f5a9e7560a6aa8949b85c5cd0215a835, type: 3}
+  sin_item: {fileID: 3604279451415291509, guid: 3851c8d59075e63729a2e35a822efba5, type: 3}
   state: 0
 --- !u!50 &3791280637614207762
 Rigidbody2D:
