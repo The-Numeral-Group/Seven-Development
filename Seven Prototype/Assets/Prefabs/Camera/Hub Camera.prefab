@@ -99,6 +99,9 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   POI:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  offset: {x: 0, y: 10}
   minDistanceToPOI: 15
   maxZoom: 40
   minZoom: 17

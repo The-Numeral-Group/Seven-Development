@@ -13,6 +13,7 @@ public class BossCamera : MonoBehaviour
     // Start is called before the first frame update
     public Vector2 offset;
     public float smoothTime = 0.5f;
+    private Vector2 currOffset;
     void Start()
     {
         
@@ -21,8 +22,14 @@ public class BossCamera : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate() //Changed from lateupdate to remove stuttering
     {
+        MoveCamera();
+    }
+
+    void MoveCamera()
+    {
+        currOffset = offset;
         Vector2 centerPoint = GetCenterPoint();
-        Vector2 newPosition = centerPoint + offset;
+        Vector2 newPosition = centerPoint + currOffset;
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(newPosition.x, newPosition.y, transform.position.z), ref velocity, smoothTime);
     }
 
@@ -39,6 +46,7 @@ public class BossCamera : MonoBehaviour
                 if (target_dist < max_distance)
                 {
                     bounds.Encapsulate(targets[i].position);
+                    currOffset = Vector2.zero;
                 }
             }
         }

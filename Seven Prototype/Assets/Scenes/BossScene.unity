@@ -356,14 +356,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3791280637614207761, guid: 436a84d11e4898c46a33473811377c16, type: 3}
-      propertyPath: crush_shadow
-      value: 
-      objectReference: {fileID: 6186627015767811670, guid: f5a9e7560a6aa8949b85c5cd0215a835, type: 3}
-    - target: {fileID: 3791280637614207761, guid: 436a84d11e4898c46a33473811377c16, type: 3}
-      propertyPath: sin_item
-      value: 
-      objectReference: {fileID: 3604279451415291509, guid: 3851c8d59075e63729a2e35a822efba5, type: 3}
     - target: {fileID: 3791280637614207764, guid: 436a84d11e4898c46a33473811377c16, type: 3}
       propertyPath: m_Name
       value: Gluttony
@@ -412,14 +404,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3791280637614207767, guid: 436a84d11e4898c46a33473811377c16, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3791280637614207767, guid: 436a84d11e4898c46a33473811377c16, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 436a84d11e4898c46a33473811377c16, type: 3}
 --- !u!1001 &7166616518466881193
@@ -429,6 +413,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7001718908070337226, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: m_Name
+      value: ShakeCam
+      objectReference: {fileID: 0}
     - target: {fileID: 7166616518786396224, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -481,6 +469,10 @@ PrefabInstance:
       propertyPath: targets.Array.data[0]
       value: 
       objectReference: {fileID: 782231542}
+    - target: {fileID: 7166616518786396225, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: offset.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7166616518786396238, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
       propertyPath: m_Name
       value: Camera

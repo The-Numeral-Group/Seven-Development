@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e4fe9c38eadb04bb918035b3915af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
 --- !u!1 &7166616518786396238
 GameObject:
   m_ObjectHideFlags: 0
@@ -23,7 +24,7 @@ GameObject:
   - component: {fileID: 7166616518786396224}
   - component: {fileID: 7166616518786396225}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: BossCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
