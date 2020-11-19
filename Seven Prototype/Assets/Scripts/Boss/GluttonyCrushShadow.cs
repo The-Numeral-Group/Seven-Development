@@ -23,7 +23,6 @@ public class GluttonyCrushShadow : MonoBehaviour
             transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 5.0f);
             gluttony.transform.position = new Vector2(player.transform.position.x, this.gameObject.transform.position.y + 120.0f);
         }
-        
     }
 
     IEnumerator freezePosition()

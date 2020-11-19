@@ -13,7 +13,9 @@ public class TestBoss : MonoBehaviour
     public GameObject projectile;
     public GameObject bite;
     public GameObject crush_shadow;
+    public GameObject sin_item;
     GameObject player;
+    GameObject camera;
     Rigidbody2D rb;
     PolygonCollider2D pc;
     float riseHeightOffset = 120;
@@ -40,6 +42,7 @@ public class TestBoss : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        camera = GameObject.Find("ShakeCam");
         rb = GetComponent<Rigidbody2D>();
         pc = GetComponent<PolygonCollider2D>();
         health = GetComponent<ActorHealth>();
@@ -53,10 +56,10 @@ public class TestBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         switch (state)
         {
@@ -135,7 +138,7 @@ public class TestBoss : MonoBehaviour
         {
             state = State.Physical_Crush;
         }
-        if ((Vector2.Distance(player.transform.position, this.gameObject.transform.position) <= bite_range) && (!biteOnCooldown)) 
+        if ((Vector2.Distance(player.transform.position, this.gameObject.transform.position) <= bite_range) && (!biteOnCooldown))
         {
             state = State.Physical_Bite;
         }
@@ -164,8 +167,9 @@ public class TestBoss : MonoBehaviour
         pc.enabled = false;
         Vector2 playerPos = GetPathToPlayerPos();
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        float rate = 1.0f/inverse_speed;
-        for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime * rate) {
+        float rate = 1.0f / inverse_speed;
+        for (float i = 0.0f; i <= 1.0f; i += Time.deltaTime * rate)
+        {
             transform.position = Vector2.Lerp(currentPos, playerPos, i);
             yield return null;
         }
@@ -187,6 +191,8 @@ public class TestBoss : MonoBehaviour
     IEnumerator SlamDown()
     {
         pc.enabled = true;
+        BossCameraShake bossCamera = camera.GetComponent<BossCameraShake>();
+        bossCamera.cameraShake(2.0f, 0.2f);
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         Vector2 desiredPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         desiredPos.y -= fallHeightOffset;
@@ -197,6 +203,7 @@ public class TestBoss : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         Debug.Log("Slam Finished");
+        Instantiate(sin_item, this.gameObject.transform.position, Quaternion.identity);
         state = State.Walk;
     }
 
@@ -243,8 +250,9 @@ public class TestBoss : MonoBehaviour
         //Move to center
         Vector2 arenaCenter = new Vector2(0, 0);
         Vector2 currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        float rate = 1.0f/inverse_speed;
-        for (float i = 0.0f; i <= 1.0f; i+=Time.deltaTime * rate) {
+        float rate = 1.0f / inverse_speed;
+        for (float i = 0.0f; i <= 1.0f; i += Time.deltaTime * rate)
+        {
             transform.position = Vector2.Lerp(currentPos, arenaCenter, i);
             yield return null;
         }
@@ -255,14 +263,15 @@ public class TestBoss : MonoBehaviour
             GameObject proj = Instantiate(projectile, this.gameObject.transform.position, Quaternion.identity) as GameObject;
             Vector2 direction = new Vector2(Mathf.Cos(i * dtheta), Mathf.Sin(i * dtheta));
             proj.GetComponent<GluttonyProjectile>().initializeProjectile(direction);
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1);
         state = State.Walk;
         //yield return null;
     }
 
-    void DoActorDeath() {
+    void DoActorDeath()
+    {
         this.gameObject.SetActive(false);
     }
 }

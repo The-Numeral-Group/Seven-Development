@@ -34,7 +34,7 @@
                 {
                     "name": "",
                     "id": "5e6a7178-ac54-4d5e-854e-0cf45e817ce8",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
@@ -276,7 +276,18 @@
                 {
                     "name": "",
                     "id": "53fcf781-4361-4de3-822f-246fad0255ad",
-                    "path": "<Keyboard>/#(C)",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4ee28761-a399-4d36-830d-2a40cb203ae7",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
