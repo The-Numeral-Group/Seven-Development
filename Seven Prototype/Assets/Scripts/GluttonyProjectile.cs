@@ -11,17 +11,18 @@ public class GluttonyProjectile : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(DestroySelf());
+        StartCoroutine(FreezeSelf());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
     {
+        Debug.Log(canMove);
         if (canMove)
         {
             rb.AddForce(movementDirection * 50);
@@ -34,9 +35,19 @@ public class GluttonyProjectile : MonoBehaviour
         canMove = true;
     }
 
+    IEnumerator FreezeSelf()
+    {
+        float offset = Random.Range(1.5f, 2.0f);
+        Debug.Log(offset);
+        yield return new WaitForSeconds(offset);
+        canMove = false;
+        rb.velocity = Vector3.zero;
+        StartCoroutine(DestroySelf());
+    }
+
     IEnumerator DestroySelf()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(60);
         this.gameObject.SetActive(false);
     }
 
