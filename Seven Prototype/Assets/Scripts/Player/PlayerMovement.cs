@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed { get; set; }
     //Variables used during dodge: Drag, and dodge Distance
     public float dodgeDistance = 15.0f;
+    public float drag_speed = 10.0f;
     public Vector2 Drag = new Vector2(10, 10);
     public Vector2 velocity;
     public Vector2 movementDirection;
@@ -75,6 +76,13 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         velocity.x /= 1 + Drag.x * Time.deltaTime;
         velocity.y /= 1 + Drag.y * Time.deltaTime;
+    }
+
+    public void DragPlayer(Vector2 target)
+    {
+        Vector2 playerPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        var offset = target - playerPos;
+        controller.Move(offset * (Time.deltaTime/1.5f));
     }
 
     /*IEnumerator DoMovement(InputAction.CallbackContext input)
