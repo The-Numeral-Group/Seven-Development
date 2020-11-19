@@ -6,25 +6,34 @@ public class TestBoss : MonoBehaviour
 {
     public float inverse_speed = 1;
     public float walk_speed;
+    public float drag_speed = 5f;
     public float crush_range = 60f;
     public float bite_range = 25f;
+
     public Vector3 movementDirection;
     public Vector3 currentPos;
+
     public GameObject projectile;
     public GameObject bite;
+    public GameObject PhaseOne_attackRange;
     public GameObject crush_shadow;
     public GameObject sin_item;
+
     GameObject player;
     GameObject camera;
+
     Rigidbody2D rb;
     PolygonCollider2D pc;
+    ActorHealth health;
+
     float riseHeightOffset = 120;
     float fallHeightOffset = 120;
     float lastX;
     float lastY;
+    float ph1_attack_counter = 0;
+
     bool projectileOnCooldown = false;
     bool biteOnCooldown = false;
-    ActorHealth health;
 
     public State state;
     public enum State
@@ -34,6 +43,8 @@ public class TestBoss : MonoBehaviour
         Crushed,
         Physical_Bite,
         Bited,
+        PH1_SA,
+        PH1_SA_activated,
         Fire_Projectile,
         Null,
     }
@@ -67,8 +78,18 @@ public class TestBoss : MonoBehaviour
             case State.Walk:
                 checkHealth();
                 GetMovementDirection();
-                CheckDistance();
-                StartCoroutine(WalkToTarget());
+                // check for special attack counter.
+                // if it is 7, activate special attack. 
+                if (ph1_attack_counter == 7)
+                {
+                    ph1_attack_counter = 0;
+                    state = State.PH1_SA;
+                }
+                else
+                {
+                    CheckDistance();
+                    StartCoroutine(WalkToTarget());
+                }
                 break;
             case State.Physical_Crush:
                 StartCoroutine(MoveToTarget());
@@ -79,6 +100,12 @@ public class TestBoss : MonoBehaviour
                 StartCoroutine(PhysicalBite());
                 break;
             case State.Bited:
+                break;
+            case State.PH1_SA:
+                StartCoroutine(PhaseOne_SpecialA());
+                break;
+            case State.PH1_SA_activated:
+                StartCoroutine(PhaseOne_SpecialA_Activated());
                 break;
             case State.Fire_Projectile:
                 StartCoroutine(GenerateProjectiles());
@@ -163,6 +190,9 @@ public class TestBoss : MonoBehaviour
     //answer by: philjhale
     IEnumerator MoveToTarget()
     {
+        // Increase Attack Counter for special attack
+        ph1_attack_counter++;
+
         state = State.Crushed;
         pc.enabled = false;
         Vector2 playerPos = GetPathToPlayerPos();
@@ -173,7 +203,7 @@ public class TestBoss : MonoBehaviour
             transform.position = Vector2.Lerp(currentPos, playerPos, i);
             yield return null;
         }
-        Debug.Log("Move Finished");
+        //Debug.Log("Move Finished");
         StartCoroutine(CrushShadow());
     }
 
@@ -200,7 +230,7 @@ public class TestBoss : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1);
-        Debug.Log("Slam Finished");
+        //Debug.Log("Slam Finished");
         Instantiate(sin_item, this.gameObject.transform.position, Quaternion.identity);
         state = State.Walk;
     }
@@ -226,9 +256,12 @@ public class TestBoss : MonoBehaviour
 
     IEnumerator PhysicalBite()
     {
+        // Increase Attack Counter for special attack
+        ph1_attack_counter++;
+
         state = State.Bited;
         biteOnCooldown = true;
-        Debug.Log("Bite");
+        //Debug.Log("Bite");
         Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
 
         yield return new WaitForSeconds(1);
@@ -239,6 +272,29 @@ public class TestBoss : MonoBehaviour
         state = State.Walk;
         yield return new WaitForSeconds(3);
         biteOnCooldown = false;
+    }
+
+    IEnumerator PhaseOne_SpecialA()
+    {
+        //Debug.Log("SPECIAL ATTACK");
+        state = State.PH1_SA_activated;
+        currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        currentPos.y -= 6.0f;
+        Instantiate(PhaseOne_attackRange, currentPos, Quaternion.identity);
+
+        // Set back to walk state
+        yield return new WaitForSeconds(5);
+        state = State.Walk;
+    }
+
+    IEnumerator PhaseOne_SpecialA_Activated()
+    {
+        // Drag player to gluttony
+        currentPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        PlayerMovement playerMov = player.GetComponent<PlayerMovement>();
+        playerMov.DragPlayer(currentPos);
+   
+        yield return null;
     }
 
     IEnumerator GenerateProjectiles()

@@ -16,7 +16,7 @@ public class PlayerCollision : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other);
+        //Debug.Log(other);
         if (other.CompareTag("SceneChange"))
         {
             Debug.Log("Scene Changed to BossScene");
@@ -40,6 +40,10 @@ public class PlayerCollision : MonoBehaviour
             {
                 // reduces player health by 5 when gluttony is slamming/crushing
                 playerHealth.takeDamage(3);
+            }
+            else if (gluttonyMov.state == TestBoss.State.PH1_SA_activated)
+            {
+                playerHealth.takeDamage(10);
             }
         }
         if (other.CompareTag("Gluttony Projectile"))
