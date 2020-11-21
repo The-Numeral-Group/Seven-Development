@@ -35,7 +35,18 @@ public class GluttonySin : MonoBehaviour, ActorEffect
     }
 
     
-    public bool ApplyEffect(ref PlayerActor player){
+    public bool ApplyEffect(ref MonoBehaviour playerActor){
+        //temp code, will be upgraded when Actor becomes a real thing
+        PlayerActor player;
+        if(playerActor is PlayerActor)
+        {
+            player = (PlayerActor)playerActor;
+        }
+        else
+        {
+            return false;
+        }
+
         if(GluttonySin.appliedGluts < GluttonySin.maxGluts){
             var health = player.getHealthObject();
             var movement = player.getMovementObject();
@@ -56,8 +67,26 @@ public class GluttonySin : MonoBehaviour, ActorEffect
         return false;
     }
 
-    public void RemoveEffect(ref PlayerActor player){
-        if(GluttonySin.appliedGluts > 0){
+    public void RemoveEffect(ref MonoBehaviour playerActor){
+        //temp code, will be upgraded when Actor becomes a real thing
+        PlayerActor player;
+        if(playerActor is PlayerActor)
+        {
+            player = (PlayerActor)playerActor;
+            if(GluttonySin.appliedGluts > 0){
+                var health = player.getHealthObject();
+                var movement = player.getMovementObject();
+
+                health.maxHealth -= (int)(health.startingMaxHealth * this.healthIncrease);
+                health.currentHealth -= (int)(health.startingMaxHealth * this.healthIncrease);
+
+                movement.speed += movement.startingSpeed * this.speedDecrease;
+
+                --GluttonySin.appliedGluts;
+            }
+        }
+
+        /*if(GluttonySin.appliedGluts > 0){
             var health = player.getHealthObject();
             var movement = player.getMovementObject();
 
@@ -67,7 +96,7 @@ public class GluttonySin : MonoBehaviour, ActorEffect
             movement.speed += movement.startingSpeed * this.speedDecrease;
 
             --GluttonySin.appliedGluts;
-        }
+        }*/
 
         if(this.deleteOnEffectEnd){
             Destroy(this.gameObject);

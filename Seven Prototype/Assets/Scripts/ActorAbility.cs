@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public interface ActorAbility{
+
+    bool getUsable();
+
+    IEnumerator coolDown(float period);
+
+    void Invoke(ref MonoBehaviour player);
+}
+
 /*Because this is a full class, it's the only thing Abilities
 can inherit from. I've made it a MonoBehaviour to make */
-public abstract class ActorAbility : MonoBehaviour
+public abstract class ActorAbilityFunctions<T1, T2> : MonoBehaviour, ActorAbility
 {
-    public float cooldownPeriod = 5.0f;
+    public float cooldownPeriod;
 
     private bool usable = true;
 
@@ -25,11 +34,12 @@ public abstract class ActorAbility : MonoBehaviour
     
     and, fyi, Invoke and InternInvoke are seperated so things using abilities
     don't need to worry about conflicting argument and return types*/
-    public virtual void Invoke()
+    //should also look for an Actor, but that type doesn't exist yet
+    public virtual void Invoke(ref MonoBehaviour user)
     {
         if(usable)
         {
-            InternInvoke<int, int>(new int[0]);
+            InternInvoke(null);
             StartCoroutine(coolDown(cooldownPeriod));
         }
         
@@ -38,5 +48,5 @@ public abstract class ActorAbility : MonoBehaviour
     /*this is only accessable to derivative classes, as it's protected
     it's also the method that does the ability, feel free to make the
     types whatever you want*/
-    protected abstract T2 InternInvoke<T1, T2>(params T1[] args);
+    protected abstract T2 InternInvoke(params T1[] args);
 }

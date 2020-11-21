@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerEffectHandler : MonoBehaviour
 {
-    PlayerActor player;
+    //should be actor, but that doesn't exist yet
+    MonoBehaviour player;
     List<ActorEffect> activeEffects;
 
     void Awake(){
