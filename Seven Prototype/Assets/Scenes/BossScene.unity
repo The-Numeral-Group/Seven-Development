@@ -206,13 +206,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237971029938119709, guid: b28c4777a073e50409e27553f727356b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119710, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: startingSpeed
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1237971029938119710, guid: b28c4777a073e50409e27553f727356b, type: 3}
       propertyPath: dodgeDistance
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b28c4777a073e50409e27553f727356b, type: 3}
@@ -228,6 +236,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7001718908070337225, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: orthographic size
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7166616518786396224, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -280,6 +292,18 @@ PrefabInstance:
       propertyPath: targets.Array.data[0]
       value: 
       objectReference: {fileID: 1138568737}
+    - target: {fileID: 7166616518786396225, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: offset.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166616518786396225, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: max_distance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166616518786396225, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
+      propertyPath: smoothTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7166616518786396238, guid: 689ed85a5b359134582ab91b5a6843ba, type: 3}
       propertyPath: m_Name
       value: BossCamera
@@ -525,6 +549,14 @@ PrefabInstance:
     - target: {fileID: 3791280637614207767, guid: 436a84d11e4898c46a33473811377c16, type: 3}
       propertyPath: m_LocalPosition.y
       value: 15.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791280637614207767, guid: 436a84d11e4898c46a33473811377c16, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791280637614207767, guid: 436a84d11e4898c46a33473811377c16, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8873986710186066049, guid: d14cafa6f1035e9f6ab1bc672d7ca05d, type: 3}
       propertyPath: m_LocalPosition.y
