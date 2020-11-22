@@ -7,12 +7,12 @@ using UnityEngine;
 public class BossCamera : MonoBehaviour
 {
     public Transform playerTransform;
-    public List<Transform> targets;
-    public float max_distance = 80f;
+    public List<GameObject> targets;
+    public float max_distance = 30f;
     private Vector3 velocity;
     // Start is called before the first frame update
-    public Vector2 offset;
-    public float smoothTime = 0.5f;
+    public Vector2 offset = new Vector2(0, 2);
+    public float smoothTime = 0.3f;
     private Vector2 currOffset;
     void Start()
     {
@@ -41,11 +41,15 @@ public class BossCamera : MonoBehaviour
         {
             for (int i = 0; i < targets.Count; i++)
             {
+                if (!targets[i].activeSelf)
+                {
+                    continue;
+                }
                 float target_dist = Vector2.Distance(new Vector2(playerTransform.position.x, playerTransform.position.y)
-                                                    , new Vector2(targets[i].position.x, targets[i].position.y));
+                                                    , new Vector2(targets[i].transform.position.x, targets[i].transform.position.y));
                 if (target_dist < max_distance)
                 {
-                    bounds.Encapsulate(targets[i].position);
+                    bounds.Encapsulate(targets[i].transform.position);
                     currOffset = Vector2.zero;
                 }
             }

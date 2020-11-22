@@ -22,7 +22,7 @@ public class GluttonyProjectile : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(canMove);
+        //Debug.Log(canMove);
         if (canMove)
         {
             rb.AddForce(movementDirection * 50);

@@ -29,7 +29,7 @@ public class ActorHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(this.gameObject.name + " Hp: " + currentHealth);
+        //Debug.Log(this.gameObject.name + " Hp: " + currentHealth);
     }
 
     public virtual void takeDamage(int damageTaken){

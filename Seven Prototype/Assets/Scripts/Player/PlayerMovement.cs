@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             isDodging = true;
             //https://medium.com/ironequal/unity-character-controller-vs-rigidbody-a1e243591483
             //credit to above link for equation used.
-            Debug.Log("Dodge Start");
+            //Debug.Log("Dodge Start");
             velocity += Vector2.Scale(movementDirection, dodgeDistance * new Vector2((Mathf.Log(1f/ (Time.deltaTime * Drag.x + 1))/-Time.deltaTime),
                                                                                                 (Mathf.Log(1f/ (Time.deltaTime * Drag.y + 1))/-Time.deltaTime)));
             StartCoroutine(Dodge());
