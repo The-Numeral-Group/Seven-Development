@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class ActorHealth : MonoBehaviour
 {
     //Public Fields (Inspector Accessable)
@@ -15,16 +16,18 @@ public class ActorHealth : MonoBehaviour
     public int maxHealth { get; set; }
     public int currentHealth { get; set; }
 
+    private SpriteRenderer sr;
+    private bool damageEfxOn = false;
     void Awake(){
         this.maxHealth = startingMaxHealth;
         this.currentHealth = this.maxHealth;
     }
     
     // Start is called before the first frame update
-    /*void Start()
+    void Start()
     {
-        
-    }*/
+        sr = this.GetComponent<SpriteRenderer>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -38,6 +41,10 @@ public class ActorHealth : MonoBehaviour
 
         //take the damage
         this.currentHealth -= damage;
+        if (!damageEfxOn)
+        {
+            StartCoroutine(FlashRed());
+        }
 
         //if the attack killed the thing
         if(this.currentHealth <= 0){
@@ -46,5 +53,15 @@ public class ActorHealth : MonoBehaviour
             but I just don't know how*/
             this.gameObject.SendMessage("DoActorDeath");//, null, RequireReciever);
         }
+    }
+
+    IEnumerator FlashRed()
+    {
+        damageEfxOn = true;
+        sr.color = Color.red;
+        yield return new WaitForSeconds(0.3f);
+        sr.color = Color.white;
+        damageEfxOn = false;
+        yield return null;
     }
 }

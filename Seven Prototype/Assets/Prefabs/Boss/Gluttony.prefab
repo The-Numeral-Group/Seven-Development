@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3791280637614207764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.79, y: 5.18, z: 1}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -141,12 +141,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inverse_speed: 1
   walk_speed: 10
+  drag_speed: 50
   crush_range: 60
   bite_range: 20
   movementDirection: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
   projectile: {fileID: 8461248972865311950, guid: 6c407ee32d542af4baa748a969ca4a5a, type: 3}
   bite: {fileID: 2181826602117766788, guid: 190058ff07415e1448da755ca3edf3a9, type: 3}
+  PhaseOne_attackRange: {fileID: 7400705800252396879, guid: 027cd43037cf890409903c7b6bb58a29, type: 3}
   crush_shadow: {fileID: 6186627015767811670, guid: f5a9e7560a6aa8949b85c5cd0215a835, type: 3}
   sin_item: {fileID: 3604279451415291509, guid: 3851c8d59075e63729a2e35a822efba5, type: 3}
   state: 0
