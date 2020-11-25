@@ -7,6 +7,8 @@ public class GluttonyProjectile : MonoBehaviour
     Rigidbody2D rb;
     bool canMove = false;
     Vector3 movementDirection;
+
+    public float force = 50f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,7 @@ public class GluttonyProjectile : MonoBehaviour
         //Debug.Log(canMove);
         if (canMove)
         {
-            rb.AddForce(movementDirection * 50);
+            rb.AddForce(movementDirection * force);
         }
     }
 
